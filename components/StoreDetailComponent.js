@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import { Card } from 'react-native-elements';
+import { View } from 'react-native';
+import { ListItem } from 'react-native-elements';
 import { SALES } from '../shared/sales';
 
 function RenderStore({store}) {
     if (store) {
         return(
-            <Card>
-                <Text style={{margin:10}}>
-                    Today's sales: {store.store_sales}
-                </Text>
-            </Card> 
+            <ListItem
+            title="Today's Sales:"
+            rightSubtitle={`${store.store_sales}`}/>
         );
     }
     return <View />;

@@ -38,7 +38,8 @@ const MainNavigator = createMaterialTopTabNavigator(
             },
             pressColor: {
                 backgroundColor: '#000'
-            }
+            },
+            
         }
     }
 )
