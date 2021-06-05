@@ -22,7 +22,7 @@ class Sales extends Component {
             return (
                 <ListItem
                     title={item.store_name}
-                    rightSubtitle={`${item.store_Sales}`}
+                    rightSubtitle={`${item.store_sales}`}
                     onPress={() => navigate('StoreDetail', { storeId: item.id, storeName: item.store_name })}
                 />
             );

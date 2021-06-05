@@ -8,7 +8,7 @@ function RenderStore({store}) {
         return(
             <Card>
                 <Text style={{margin:10}}>
-                    Today's sales: {store.store_Sales}
+                    Today's sales: {store.store_sales}
                 </Text>
             </Card> 
         );
