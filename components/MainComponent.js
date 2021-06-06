@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import Faq from './FaqComponent';
 import Sales from './SalesComponent';
 import StoreDetail from './StoreDetailComponent';
+import Login from './LoginComponent';
+
+
 
 const SalesNavigator = createStackNavigator(
     {
@@ -19,8 +22,9 @@ const SalesNavigator = createStackNavigator(
     }
 )
 
-const MainNavigator = createMaterialTopTabNavigator(
+const TabNavigator = createMaterialTopTabNavigator(
     {
+
         Sales: {screen: SalesNavigator},
         Faqs: {screen: Faq}
     },
@@ -44,6 +48,16 @@ const MainNavigator = createMaterialTopTabNavigator(
     }
 )
 
+const MainNavigator = createSwitchNavigator(
+    {
+        Login: {screen: Login},
+        Home: {screen: TabNavigator}
+      },
+      {
+        initialRouteName: 'Login',
+      }
+)
+
 const AppNavigator = createAppContainer(MainNavigator);
 
 class Main extends Component{
@@ -59,5 +73,4 @@ class Main extends Component{
         );
     };
 }
-
 export default Main;
