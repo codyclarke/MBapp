@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, RefreshControl } from 'react-native';
 import { FlatList } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { SALES } from '../shared/sales';
 
-class Sales extends Component {
+function wait(timeout) {
+    return new Promise(resolve => {
+      setTimeout(resolve, timeout);
+    });
+  }
+  
+  Sales.navigationOptions = {
+      headerShown: false
+   };
+function Sales(props) {
+      
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            sales: SALES
-        };
-    }
 
-    static navigationOptions = {
-       headerShown: false
-    };
-
-    Header = () => {
+    const Header = () => {
         return(
             <View style={styles.header}>
                 <Text style={styles.headerTextLeft}>Store Location</Text>
@@ -25,29 +25,42 @@ class Sales extends Component {
             </View>
         )
     }
-
-    render() {
-        const { navigate } = this.props.navigation;
+        const [refreshing, setRefreshing] = React.useState(false);
+    
+        const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+        }, []);
+        
+        const { navigate } = props.navigation;
         const renderSalesItem = ({item}) => {
             return (
-                <ListItem
-                    title={item.store_name}
-                    rightSubtitle={`${item.store_sales}`}
-                    onPress={() => navigate('StoreDetail', { storeId: item.id, storeName: item.store_name })}
-                />
+                <ListItem bottomDivider onPress={() => navigate('StoreDetail', { storeId: item.id, storeName: item.store_name })}>
+                    <ListItem.Title >{item.store_name}</ListItem.Title>
+                    <View style={styles.subtitle}>
+                        <Text>{item.store_sales}</Text>
+                    </View>
+
+                </ListItem>
+            
             );
         }
         return(
             <FlatList
-                data={this.state.sales}
+                data={SALES}
                 renderItem={renderSalesItem}
                 keyExtractor={item => item.id.toString()}
                 stickyHeaderIndices={[0]}
-                ListHeaderComponent={this.Header}
+                ListHeaderComponent={Header}
+                refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                    />
+                  }
             />
         );
     }
-}
 
 const styles = StyleSheet.create({
     header: {
@@ -69,6 +82,12 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         padding: 10,
         color: '#153853'
+    },
+    subtitle: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'row-reverse',
+        
     }
 
 }

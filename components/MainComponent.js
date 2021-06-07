@@ -13,12 +13,13 @@ import Login from './LoginComponent';
 const SalesNavigator = createStackNavigator(
     {
         Sales: { screen: Sales },
-        StoreDetail: { screen: StoreDetail}
-        
+        StoreDetail: { screen: StoreDetail},
+
     },
     {
         initialRouteName: 'Sales',
-        headerMode: 'screen'
+        headerMode: 'screen',
+        
     }
 )
 
@@ -61,6 +62,7 @@ const MainNavigator = createSwitchNavigator(
 const AppNavigator = createAppContainer(MainNavigator);
 
 class Main extends Component{
+    
     render() {
         return (
             <View

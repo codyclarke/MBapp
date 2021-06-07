@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { SALES } from '../shared/sales';
 
 function RenderStore({store}) {
     if (store) {
         return(
-            <ListItem
-            title="Today's Sales:"
-            rightSubtitle={`${store.store_sales}`}/>
+            <ListItem>
+                <ListItem.Title>Today's Sales:</ListItem.Title>
+                <View style={styles.subtitle}>
+                        <Text>{store.store_sales}</Text>
+                    </View>
+            </ListItem>
+            
+            
         );
     }
     return <View />;
@@ -21,7 +26,7 @@ class StoreDetail extends Component{
             sales: SALES
         };
     }
-
+    
     static navigationOptions = ({navigation}) => {
         return {
             title: navigation.getParam('storeName')
@@ -35,4 +40,12 @@ class StoreDetail extends Component{
     }
 }
 
+const styles = StyleSheet.create({
+    subtitle: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'row-reverse',
+        
+    }
+})
 export default StoreDetail;
